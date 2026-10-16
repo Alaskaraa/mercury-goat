@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>КОЗЁЛ!!! — МЕРКУРИЙ</title>
+
+<style>
+:root {
+    --gold: #d7bc7a;
+    --dark: #101214;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--dark);
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+}
+
+.scene {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at center,
+            #29251d 0%,
+            #101214 65%
+        );
+}
+
+.stage {
+    position: relative;
+    width: min(95vw, 900px);
+    height: 360px;
+    overflow: visible;
+}
+
+.title {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    white-space: nowrap;
+    color: var(--gold);
+    font-size: clamp(28px, 8vw, 88px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    text-shadow: 0 0 30px #d7bc7a44;
+    user-select: none;
+}
+
+.letter {
+    display: inline-block;
+    position: relative;
+    transform-origin: bottom center;
+}
+
+.letter.hit {
+    animation: letterHit 1.3s forwards;
+}
+
+@keyframes letterHit {
+    0% {
+        transform: rotate(0) translateY(0);
+    }
+
+    20% {
+        transform: rotate(15deg) translateY(-10px);
+    }
+
+    45% {
+        transform: rotate(75deg) translateY(35px);
+    }
+
+    70% {
+        transform: rotate(105deg) translateY(75px);
+    }
+
+    100% {
+        transform: rotate(90deg) translateY(70px);
+    }
+}
+
+.letter.recover {
+    animation: letterRecover 0.9s forwards;
+}
+
+@keyframes letterRecover {
+    from {
+        transform: rotate(90deg) translateY(70px);
+    }
+
+    60% {
+        transform: rotate(-15deg) translateY(-10px);
+    }
+
+    to {
+        transform: rotate(0) translateY(0);
+    }
+}
+
+/* КОЗЁЛ */
+
+.goat {
+    position: absolute;
+    left: -160px;
+    top: 165px;
+    width: 145px;
+    height: 155px;
+    z-index: 10;
+    transform-origin: 50% 85%;
+    will-change: left, transform;
+}
+
+.goat.running {
+    animation: runningBounce 0.22s infinite alternate;
+}
+
+@keyframes runningBounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-12px);
+    }
+}
+
+.goat.butting {
+    animation: goatButt 0.4s forwards;
+}
+
+@keyframes goatButt {
+    0% {
+        transform: rotate(0) translateX(0);
+    }
+
+    40% {
+        transform: rotate(28deg) translateX(20px);
+    }
+
+    100% {
+        transform: rotate(-12deg) translateX(-10px);
+    }
+}
+
+/* ПАДЕНИЕ НА ПОПУ С ОТСКОКОМ */
+
+.goat.falling {
+    animation: goatFall 1.3s cubic-bezier(.2,.8,.3,1) forwards;
+    transform-origin: 50% 85%;
+}
+
+@keyframes goatFall {
+    0% {
+        transform: translate(0, 0) rotate(-12deg);
+    }
+
+    15% {
+        transform: translate(-25px, -35px) rotate(-20deg);
+    }
+
+    35% {
+        transform: translate(-55px, -5px) rotate(12deg);
+    }
+
+    48% {
+        transform: translate(-65px, 22px) rotate(0deg) scale(1.08, .88);
+    }
+
+    60% {
+        transform: translate(-65px, -12px) rotate(-5deg) scale(.96, 1.05);
+    }
+
+    73% {
+        transform: translate(-65px, 22px) rotate(0deg) scale(1.06, .9);
+    }
+
+    84% {
+        transform: translate(-65px, 12px) rotate(2deg) scale(.98, 1.02);
+    }
+
+    100% {
+        transform: translate(-65px, 22px) rotate(0deg);
+    }
+}
+
+/* КОЗЁЛ СИДИТ */
+
+.goat.sitting {
+    transform: translate(-65px, 22px) rotate(0deg);
+}
+
+/* КОЗЁЛ ВСТАЁТ */
+
+.goat.standing {
+    animation: goatStand 1s forwards;
+    transform-origin: 50% 85%;
+}
+
+@keyframes goatStand {
+    0% {
+        transform: translate(-65px, 22px) rotate(0deg);
+    }
+
+    35% {
+        transform: translate(-65px, 8px) rotate(-8deg);
+    }
+
+    65% {
+        transform: translate(-25px, -12px) rotate(8deg);
+    }
+
+    85% {
+        transform: translate(0, 3px) rotate(-3deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+/* ТЕЛО */
+
+.goat-body {
+    position: absolute;
+    left: 25px;
+    bottom: 25px;
+    width: 90px;
+    height: 85px;
+    background: #f0e4d2;
+    border: 4px solid #b9a68c;
+    border-radius: 48%;
+    z-index: 2;
+}
+
+.tail {
+    position: absolute;
+    right: 13px;
+    bottom: 70px;
+    width: 30px;
+    height: 18px;
+    background: #f0e4d2;
+    border: 3px solid #b9a68c;
+    border-radius: 50%;
+    transform: rotate(-35deg);
+}
+
+.goat-head {
+    position: absolute;
+    left: 42px;
+    top: 3px;
+    width: 75px;
+    height: 77px;
+    background: #f7ead9;
+    border: 4px solid #b9a68c;
+    border-radius: 45% 45% 50% 50%;
+    z-index: 5;
+    transform-origin: bottom center;
+}
+
+.goat:not(.falling):not(.sitting) .goat-head {
+    animation: headWiggle 1.5s infinite alternate;
+}
+
+@keyframes headWiggle {
+    from {
+        transform: rotate(-5deg);
+    }
+
+    to {
+        transform: rotate(7deg);
+    }
+}
+
+/* РОГА */
+
+.horn {
+    position: absolute;
+    top: -25px;
+    width: 17px;
+    height: 34px;
+    background: #c7a35a;
+    border-radius: 80% 80% 15% 15%;
+}
+
+.horn.left {
+    left: 8px;
+    transform: rotate(-25deg);
+}
+
+.horn.right {
+    right: 8px;
+    transform: rotate(25deg);
+}
+
+/* УШИ */
+
+.ear {
+    position: absolute;
+    top: 17px;
+    width: 35px;
+    height: 22px;
+    background: #e7b8b8;
+    border: 3px solid #b9a68c;
+    border-radius: 50%;
+}
+
+.ear.left {
+    left: -27px;
+    transform: rotate(-25deg);
+}
+
+.ear.right {
+    right: -27px;
+    transform: rotate(25deg);
+}
+
+/* ГЛАЗА */
+
+.eye {
+    position: absolute;
+    top: 25px;
+    width: 14px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.eye.left {
+    left: 15px;
+}
+
+.eye.right {
+    right: 15px;
+}
+
+.eye::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 7px;
+    height: 9px;
+    background: #171717;
+    border-radius: 50%;
+}
+
+.goat.sitting .eye {
+    animation: blink 0.5s 3;
+}
+
+@keyframes blink {
+    50% {
+        transform: scaleY(0.1);
+    }
+}
+
+/* МОРДОЧКА */
+
+.snout {
+    position: absolute;
+    bottom: -3px;
+    left: 15px;
+    width: 39px;
+    height: 28px;
+    background: #e6c2ae;
+    border-radius: 50%;
+}
+
+.nose {
+    position: absolute;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    background: #72574b;
+    border-radius: 50%;
+}
+
+.nose.left {
+    left: 10px;
+}
+
+.nose.right {
+    right: 10px;
+}
+
+.mouth {
+    position: absolute;
+    bottom: 5px;
+    left: 12px;
+    width: 15px;
+    height: 7px;
+    border-bottom: 3px solid #72574b;
+    border-radius: 50%;
+}
+
+/* НОГИ И КОПЫТА */
+
+.leg {
+    position: absolute;
+    bottom: 0;
+    width: 17px;
+    height: 43px;
+    background: #e9ddc9;
+    border-radius: 9px;
+    transform-origin: top center;
+}
+
+.leg::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -2px;
+    width: 21px;
+    height: 12px;
+    background: #685b53;
+    border-radius: 5px;
+}
+
+.leg.one {
+    left: 37px;
+}
+
+.leg.two {
+    left: 91px;
+}
+
+/* БЕГ */
+
+.goat.running .leg.one {
+    animation: legsRun 0.2s infinite alternate;
+}
+
+.goat.running .leg.two {
+    animation: legsRun 0.2s infinite alternate-reverse;
+}
+
+@keyframes legsRun {
+    from {
+        transform: rotate(-35deg);
+    }
+
+    to {
+        transform: rotate(35deg);
+    }
+}
+
+/* НОГИ ВО ВРЕМЯ ПАДЕНИЯ */
+
+.goat.falling .leg.one {
+    animation: legsFly 0.32s ease-in-out infinite alternate;
+}
+
+.goat.falling .leg.two {
+    animation: legsFly 0.32s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes legsFly {
+    from {
+        transform: rotate(-75deg);
+    }
+
+    to {
+        transform: rotate(-145deg);
+    }
+}
+
+/* КОПЫТА ЗАДРАНЫ, КОГДА КОЗЁЛ СИДИТ */
+
+.goat.sitting .leg.one {
+    transform: rotate(-105deg);
+}
+
+.goat.sitting .leg.two {
+    transform: rotate(-125deg);
+}
+
+/* РЕПЛИКИ */
+
+.speech {
+    position: relative;
+    max-width: 440px;
+    min-height: 80px;
+    margin: 15px auto;
+    padding: 22px;
+    background: white;
+    color: #17191a;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.4s;
+}
+
+.speech.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ПОДАРОК */
+
+.gift-area {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.gift-area.visible {
+    display: flex;
+    animation: giftAppear 0.8s forwards;
+}
+
+@keyframes giftAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.2) rotate(-30deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+.gift {
+    position: relative;
+    width: 140px;
+    height: 145px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    animation: giftFloat 2s infinite ease-in-out;
+}
+
+@keyframes giftFloat {
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+.gift-box {
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    width: 110px;
+    height: 100px;
+    background: linear-gradient(
+        135deg,
+        #f4d58b,
+        #b98c3e
+    );
+    border-radius: 10px;
+    box-shadow: 0 0 40px #d7bc7a66;
+}
+
+.gift-lid {
+    position: absolute;
+    top: 25px;
+    left: 5px;
+    width: 130px;
+    height: 32px;
+    background: #f4d58b;
+    border-radius: 8px;
+    z-index: 3;
+    transition: 0.7s;
+}
+
+.ribbon {
+    position: absolute;
+    left: 59px;
+    bottom: 0;
+    width: 22px;
+    height: 118px;
+    background: #8b2929;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.bow {
+    position: absolute;
+    top: -10px;
+    left: 39px;
+    font-size: 55px;
+    z-index: 4;
+    transition: 0.7s;
+    pointer-events: none;
+}
+
+.gift.open .gift-lid {
+    transform: translateY(-100px) rotate(-25deg);
+    opacity: 0;
+}
+
+.gift.open .bow {
+    transform: translateY(-100px) rotate(30deg);
+    opacity: 0;
+}
+
+.gift-hint {
+    color: var(--gold);
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* КОНФЕТТИ */
+
+.confetti {
+    position: fixed;
+    top: -20px;
+    width: 10px;
+    height: 16px;
+    z-index: 100;
+    pointer-events: none;
+    animation: confettiFall 3s linear forwards;
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ПРЕДЛОЖЕНИЕ */
+
+.offer {
+    display: none;
+    width: min(92%, 520px);
+    margin: 30px auto 60px;
+    padding: 35px 25px;
+    background: #1b1e20;
+    border: 1px solid var(--gold);
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 0 50px #d7bc7a15;
+}
+
+.offer.visible {
+    display: block;
+    animation: offerAppear 0.8s forwards;
+}
+
+@keyframes offerAppear {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.offer h1 {
+    color: var(--gold);
+    font-size: 32px;
+}
+
+.discount {
+    color: var(--gold);
+    font-size: 90px;
+    font-weight: 900;
+    margin: 10px 0;
+    text-shadow: 0 0 30px #d7bc7a55;
+}
+
+.offer p {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.services {
+    text-align: left;
+    max-width: 350px;
+    margin: 25px auto;
+    line-height: 2.2;
+    font-size: 16px;
+}
+
+.button {
+    width: 100%;
+    display: block;
+    padding: 20px;
+    margin-top: 20px;
+    background: var(--gold);
+    color: #111;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #f3d995;
+}
+
+.skip {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 11px 15px;
+    background: #292929;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 50;
+}
+
+.footer {
+    margin-top: 30px;
+    color: #888;
+    font-size: 12px;
+}
+
+/* МОБИЛЬНАЯ ВЕРСИЯ */
+
+@media (max-width: 600px) {
+    .stage {
+        height: 310px;
+    }
+
+    .title {
+        top: 75px;
+    }
+
+    .goat {
+        top: 145px;
+        scale: 0.8;
+        transform-origin: bottom left;
+    }
+
+    .speech {
+        font-size: 18px;
+    }
+
+    .discount {
+        font-size: 75px;
+    }
+
+    .offer h1 {
+        font-size: 26px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button class="skip" id="skip" onclick="skipIntro()">
+    Пропустить →
+</button>
+
+<section class="scene">
+
+    <div class="stage" id="stage">
+
+        <div class="title" id="title">
+            <span class="letter">М</span>
+            <span class="letter">Е</span>
+            <span class="letter">Р</span>
+            <span class="letter">К</span>
+            <span class="letter">У</span>
+            <span class="letter">Р</span>
+            <span class="letter">И</span>
+            <span class="letter" id="letterY">Й</span>
+        </div>
+
+        <div class="goat" id="goat">
+
+            <div class="tail"></div>
+            <div class="goat-body"></div>
+
+            <div class="leg one"></div>
+            <div class="leg two"></div>
+
+            <div class="goat-head">
+
+                <div class="horn left"></div>
+                <div class="horn right"></div>
+
+                <div class="ear left"></div>
+                <div class="ear right"></div>
+
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+
+                <div class="snout">
+                    <div class="nose left"></div>
+                    <div class="nose right"></div>
+                    <div class="mouth"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="speech" id="speech" aria-live="polite"></div>
+
+    <div class="gift-area" id="giftArea">
+
+        <button
+            class="gift"
+            id="gift"
+            onclick="openGift()"
+            aria-label="Открыть подарок"
+        >
+            <div class="gift-box"></div>
+            <div class="gift-lid"></div>
+            <div class="ribbon"></div>
+            <div class="bow">🎀</div>
+        </button>
+
+        <div class="gift-hint">
+            🎁 Нажми на подарок!
+        </div>
+
+    </div>
+
+</section>
+
+<section class="offer" id="offer">
+
+    <h1>🎉 БЕЕЕ! ПОЗДРАВЛЯЮ!</h1>
+
+    <p>
+        А ты не зря сюда заглянул!
+        <br>
+        Держи подарок от «Меркурия»!
+    </p>
+
+    <div class="discount">1%</div>
+
+    <h2>КОМИССИЯ ПАРКА</h2>
+
+    <p>
+        Вместо стандартных 3%!
+        <br>
+        <strong>На первые 15 дней подключения.</strong>
+    </p>
+
+    <hr style="
+        border: 1px solid #393939;
+        margin: 30px 0;
+    ">
+
+    <h1>🚕 МЕРКУРИЙ</h1>
+
+    <p>
+        Знакомься!
+        <br><br>
+        Мы — таксопарк «Меркурий» в Перми.
+        Помогаем водителям работать и зарабатывать.
+    </p>
+
+    <div class="services">
+        🚘 Аренда автомобилей
+        <br>
+        🔑 Аренда с последующим выкупом
+        <br>
+        📱 Подключение к Яндекс Такси
+        <br>
+        💰 Стандартная комиссия парка — 3%
+        <br>
+        🎁 По акции — всего 1%
+    </div>
+
+    <button class="button" onclick="contactManager()">
+        🐐 ЗАБРАТЬ ПОДАРОК В MAX
+    </button>
+
+    <p style="
+        font-size: 13px;
+        color: #aaa;
+        margin-top: 20px;
+    ">
+        Акция для новых водителей,
+        подключающихся на собственном автомобиле.
+        Скидка действует первые 15 дней.
+    </p>
+
+    <div class="footer">
+        МЕРКУРИЙ © 2026
+        <br>
+        Пермь
+    </div>
+
+</section>
+
+<script>
+const goat = document.getElementById("goat");
+const letterY = document.getElementById("letterY");
+const speech = document.getElementById("speech");
+const giftArea = document.getElementById("giftArea");
+const gift = document.getElementById("gift");
+const offer = document.getElementById("offer");
+const stage = document.getElementById("stage");
+const skipButton = document.getElementById("skip");
+
+let timers = [];
+let giftOpened = false;
+let introSkipped = false;
+
+function schedule(callback, delay) {
+    const timer = setTimeout(() => {
+        if (!introSkipped) {
+            callback();
+        }
+    }, delay);
+
+    timers.push(timer);
+
+    return timer;
+}
+
+function say(text) {
+    speech.classList.remove("visible");
+
+    schedule(() => {
+        speech.innerHTML = text;
+        speech.classList.add("visible");
+    }, 150);
+}
+
+function moveGoat(x, duration = 800) {
+    goat.classList.remove(
+        "butting",
+        "falling",
+        "sitting",
+        "standing"
+    );
+
+    goat.classList.add("running");
+
+    goat.style.transition =
+        "left " + duration + "ms ease-in-out";
+
+    goat.style.left = x + "px";
+
+    schedule(() => {
+        goat.classList.remove("running");
+    }, duration);
+}
+
+function startIntro() {
+    const width = stage.clientWidth;
+
+    const letterPosition =
+        letterY.getBoundingClientRect().left -
+        stage.getBoundingClientRect().left;
+
+    const target = letterPosition - 115;
+
+    // Козёл выбегает на сцену.
+
+    schedule(() => {
+        moveGoat(target, 1800);
+    }, 500);
+
+    // Козёл боднул букву.
+
+    schedule(() => {
+        goat.classList.remove("running");
+
+        goat.style.transition = "none";
+
+        goat.classList.add("butting");
+        letterY.classList.add("hit");
+    }, 2500);
+
+    // Козёл отлетает и падает на попу.
+
+    schedule(() => {
+        goat.classList.remove("butting");
+        goat.classList.add("falling");
+    }, 2900);
+
+    // Приземление и первая реплика.
+
+    schedule(() => {
+        goat.classList.remove("falling");
+        goat.classList.add("sitting");
+
+        say(
+            "БЕЕЕЕ! 🐐<br>" +
+            "Ой... Кажется, я немного перестарался!"
+        );
+    }, 4200);
+
+    // Козёл смотрит на букву.
+
+    schedule(() => {
+        say(
+            "Эээ... 😳<br>" +
+            "Так и было, честно!"
+        );
+    }, 5700);
+
+    // Козёл встаёт.
+
+    schedule(() => {
+        goat.classList.remove("sitting");
+        goat.classList.add("standing");
+
+        say(
+            "Ладно, ладно!<br>" +
+            "Сейчас всё исправлю!"
+        );
+    }, 7200);
+
+    // Буква возвращается на место.
+
+    schedule(() => {
+        letterY.classList.remove("hit");
+        letterY.classList.add("recover");
+    }, 8200);
+
+    // Козёл окончательно встал.
+
+    schedule(() => {
+        goat.classList.remove("standing");
+
+        goat.style.transform = "none";
+
+        say(
+            "Фух! Ну вот! 😎<br>" +
+            "Теперь всё красиво!"
+        );
+    }, 9200);
+
+    // Приветствие.
+
+    schedule(() => {
+        say(
+            "Бее-е! 🐐<br>" +
+            "Ну привет! Приятно познакомиться!"
+        );
+    }, 10800);
+
+    // Знакомство с подарком.
+
+    schedule(() => {
+        say(
+            "Раз уж познакомились,<br>" +
+            "у меня для тебя кое-что есть!"
+        );
+    }, 12800);
+
+    // Козёл отходит влево.
+
+    schedule(() => {
+        moveGoat(
+            Math.max(0, width / 2 - 200),
+            900
+        );
+    }, 14500);
+
+    // Появляется подарок.
+
+    schedule(() => {
+        giftArea.classList.add("visible");
+
+        say(
+            "Ну что стоишь? 😏<br>" +
+            "Открывай! Это тебе! 🎁"
+        );
+    }, 16000);
+}
+
+function createConfetti() {
+    const colors = [
+        "#d7bc7a",
+        "#ffffff",
+        "#f4cf65",
+        "#ff7b7b",
+        "#8fd9ff"
+    ];
+
+    for (let i = 0; i < 100; i++) {
+        const piece = document.createElement("div");
+
+        piece.className = "confetti";
+
+        piece.style.left =
+            Math.random() * 100 + "vw";
+
+        piece.style.background =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        piece.style.animationDelay =
+            Math.random() * 1.5 + "s";
+
+        piece.style.animationDuration =
+            (2 + Math.random() * 2) + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+            piece.remove();
+        }, 5000);
+    }
+}
+
+function openGift() {
+    if (giftOpened) return;
+
+    giftOpened = true;
+
+    gift.classList.add("open");
+
+    createConfetti();
+
+    say(
+        "БЕЕЕЕ! 🎉<br>" +
+        "Поздравляю! Лови свой подарок!"
+    );
+
+    setTimeout(() => {
+        say(
+            "Твоя комиссия — всего 1%!<br>" +
+            "Вместо 3% на первые 15 дней! 🚕"
+        );
+    }, 1700);
+
+    setTimeout(() => {
+        showOffer();
+    }, 4000);
+}
+
+function showOffer() {
+    introSkipped = true;
+
+    timers.forEach(clearTimeout);
+    timers = [];
+
+    offer.classList.add("visible");
+
+    skipButton.style.display = "none";
+
+    offer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function skipIntro() {
+    introSkipped = true;
+
+    timers.forEach(clearTimeout);
+    timers = [];
+
+    goat.classList.remove(
+        "running",
+        "butting",
+        "falling",
+        "sitting",
+        "standing"
+    );
+
+    goat.style.transition = "none";
+
+    letterY.classList.remove("hit", "recover");
+
+    showOffer();
+}
+
+function contactManager() {
+    window.open(
+        "https://max.ru/u/f9LHodD0cOILzL1Q6A8o7CxeR6T3SHS4wpPtE9Ldspllnn6csjFNq3GQuY4",
+        "_blank",
+        "noopener,noreferrer"
+    );
+}
+
+startIntro();
+</script>
+
+</body>
+</html>
